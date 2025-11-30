@@ -1,0 +1,10 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_BASE: "https://api.ejemplo.com"
+    ports:
+      - "80:80"
+    restart: unless-stopped
