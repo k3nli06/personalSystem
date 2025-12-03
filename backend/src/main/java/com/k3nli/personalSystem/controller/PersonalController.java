@@ -36,7 +36,7 @@ public class PersonalController {
         return ResponseEntity.ok().body(service.findAllPersonal());
     }
 
-    @PreAuthorize("(authentication.name == #id.toString && hasAuthority('employee')) || hasAuthority('human resources')")
+    @PreAuthorize("authentication.name == #id.toString || hasAuthority('human resources')")
     @GetMapping("/{id}")
     public ResponseEntity<PersonalDto> getPersonal(@PathVariable(name = "id") Long id) {
         var personal = service.findPersonal(id);
@@ -57,6 +57,7 @@ public class PersonalController {
         return ResponseEntity.ok().body(service.updatePersonal(id, personal));
     }
 
+    @PreAuthorize("authentication.name == #id.toString || hasAuthority('human resources')")
     @PatchMapping("/update-password/{id}")
     public ResponseEntity<?> updatePersonalPassword(@PathVariable(name = "id") Long id, @RequestBody String Password) {
         service.updatePersonalPassword(id, Password);
