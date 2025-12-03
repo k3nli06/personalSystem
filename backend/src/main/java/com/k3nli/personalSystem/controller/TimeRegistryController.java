@@ -8,6 +8,7 @@ import com.k3nli.personalSystem.service.TimeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ public class TimeRegistryController {
     @Autowired
     TimeService service;
 
+    @PreAuthorize("hasAuthority('human resources') || authentication.name == #id.toString()")
     @PostMapping("/{id}")
     public ResponseEntity<?> postMethodName(@PathVariable(name = "id") Long id, @RequestBody TimeRegistryRequest time) {        
         service.addHour(id, time.time());

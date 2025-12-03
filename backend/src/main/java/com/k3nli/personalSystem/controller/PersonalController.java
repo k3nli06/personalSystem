@@ -9,7 +9,9 @@ import com.k3nli.personalSystem.service.PersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -34,30 +36,31 @@ public class PersonalController {
         return ResponseEntity.ok().body(service.findAllPersonal());
     }
 
-    @PreAuthorize("authenticated()")
+    @PreAuthorize("(authentication.name == #id.toString && hasAuthority('employee')) || hasAuthority('human resources')")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPersonal(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<PersonalDto> getPersonal(@PathVariable(name = "id") Long id) {
         var personal = service.findPersonal(id);
         
         if(personal.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(personal);
+        return ResponseEntity.ok().body(personal.get());
     }
 
     @PostMapping
-    public ResponseEntity<?> savePersonal(@RequestBody PersonalDto personal) {        
+    public ResponseEntity<PersonalDto> savePersonal(@RequestBody PersonalDto personal) {        
         return ResponseEntity.status(HttpStatus.CREATED).body(service.addPersonal(personal));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updatePersonal(@PathVariable(name = "id") Long id, @RequestBody PersonalDto personal) {
+    public ResponseEntity<PersonalDto> updatePersonal(@PathVariable(name = "id") Long id, @RequestBody PersonalDto personal) {
         return ResponseEntity.ok().body(service.updatePersonal(id, personal));
     }
 
-    @PatchMapping("/{id}")
-    public void updatePersonalPassword(@PathVariable(name = "id") Long id, @RequestBody String Password) {
+    @PatchMapping("/update-password/{id}")
+    public ResponseEntity<?> updatePersonalPassword(@PathVariable(name = "id") Long id, @RequestBody String Password) {
         service.updatePersonalPassword(id, Password);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
