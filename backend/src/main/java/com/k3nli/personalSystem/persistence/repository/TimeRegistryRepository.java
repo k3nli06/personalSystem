@@ -14,5 +14,6 @@ public interface TimeRegistryRepository extends JpaRepository<TimeRegistry, UUID
 
     public List<TimeRegistry> findByPersonalIdAndInHourAfter(Long id, LocalDateTime date);
     public List<TimeRegistry> findByPersonalIdAndInHourBetween(Long id, LocalDateTime startMonth, LocalDateTime endMonth);
+    public List<TimeRegistry> findByInHourAfter(LocalDateTime date);
 
 }
