@@ -69,7 +69,7 @@ public class PersonalController {
         if(!service.deletePersonal(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }
