@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  personalsystem:
+    build: ./backend/
+    ports:
+      - 8080:8080
+    environment:
+      - DATASOURCE_URL=jdbc:postgresql://db:5432/personal_system
+      - DATASOURCE_USERNAME=root
+      - DATASOURCE_PASSWORD=root
+      - ALLOWED_ORIGINS=localhost:3000
+      - SECRET_KEY=508c52c1679a9675deff3b6e276aa201bd4e7cfedfa02708bc9858a1f179c5a1
+    restart: always
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=personal_system
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root

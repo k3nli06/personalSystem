@@ -1,7 +1,7 @@
 package com.k3nli.personalSystem.service;
 
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 import javax.crypto.SecretKey;
 
@@ -21,10 +21,12 @@ public class JwtService {
     private String secretKey;
 
     public String getToken(UserDetails personal) {
-        return getToken(personal, Map.of());
+        Object[] roles = personal.getAuthorities().stream().toArray();
+        
+        return getToken(personal, roles);
     }
 
-    private String getToken(UserDetails user, Object roles) {
+    private String getToken(UserDetails user, Object[] roles) {
         return Jwts.builder()
                 .subject(user.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
