@@ -10,7 +10,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Vacations {
 
@@ -24,53 +30,11 @@ public class Vacations {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Vacations() {}
-
     public Vacations(Long id, Personal personal, LocalDateTime start, LocalDateTime finish, Status status) {
         this.id = id;
         this.personal = personal;
         this.start = start;
         this.finish = finish;
-        this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Personal getPersonal() {
-        return personal;
-    }
-
-    public void setPersonal(Personal personal) {
-        this.personal = personal;
-    }
-
-    public LocalDateTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-
-    public LocalDateTime getFinish() {
-        return finish;
-    }
-
-    public void setFinish(LocalDateTime finish) {
-        this.finish = finish;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
         this.status = status;
     }
 

@@ -25,7 +25,13 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Personal implements UserDetails {
 
@@ -53,8 +59,6 @@ public class Personal implements UserDetails {
     @CurrentTimestamp(event = EventType.INSERT)
     private LocalDateTime hiringDate;
     
-    public Personal() {}
-
     public Personal(Long id, String name, String email, String password, Department department, String workstation) {
         this.id = id;
         this.name = name;
@@ -62,86 +66,6 @@ public class Personal implements UserDetails {
         this.password = password;
         this.department = department;
         this.workstation = workstation;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public String getWorkstation() {
-        return workstation;
-    }
-
-    public void setWorkstation(String workstation) {
-        this.workstation = workstation;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public Set<TimeRegistry> getTimes() {
-        return times;
-    }
-
-    public void setTimes(Set<TimeRegistry> times) {
-        this.times = times;
-    }
-
-    public Set<Vacations> getVacations() {
-        return vacations;
-    }
-
-    public void setVacations(Set<Vacations> vacations) {
-        this.vacations = vacations;
-    }
-
-    public LocalDateTime getHiringDate() {
-        return hiringDate;
-    }
-
-    public void setHiringDate(LocalDateTime hiringDate) {
-        this.hiringDate = hiringDate;
     }
     
     @Override

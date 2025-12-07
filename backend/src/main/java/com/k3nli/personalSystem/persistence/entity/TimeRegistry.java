@@ -10,7 +10,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "time_registry")
 public class TimeRegistry {
@@ -23,44 +29,10 @@ public class TimeRegistry {
     private LocalDateTime inHour;
     private LocalDateTime outHour;
     
-    public TimeRegistry() {}
-
     public TimeRegistry(UUID id, Personal personal, LocalDateTime inHour, LocalDateTime outHour) {
         this.id = id;
         this.personal = personal;
         this.inHour = inHour;
-        this.outHour = outHour;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Personal getPersonal() {
-        return personal;
-    }
-
-    public void setPersonal(Personal personal) {
-        this.personal = personal;
-    }
-
-    public LocalDateTime getInHour() {
-        return inHour;
-    }
-
-    public void setInHour(LocalDateTime inHour) {
-        this.inHour = inHour;
-    }
-
-    public LocalDateTime getOutHour() {
-        return outHour;
-    }
-
-    public void setOutHour(LocalDateTime outHour) {
         this.outHour = outHour;
     }
 
