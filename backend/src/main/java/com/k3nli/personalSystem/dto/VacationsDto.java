@@ -4,6 +4,6 @@ import java.time.LocalDateTime;
 
 import com.k3nli.personalSystem.persistence.entity.Status;
 
-public record VacationsDto(Long id, LocalDateTime start, LocalDateTime finish, Status status) {
+public record VacationsDto(Long id, PersonalDto personal, LocalDateTime start, LocalDateTime finish, Status status) {
 
 }
