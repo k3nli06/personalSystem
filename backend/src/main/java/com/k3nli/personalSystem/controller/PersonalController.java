@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.k3nli.personalSystem.dto.PersonalDto;
 import com.k3nli.personalSystem.service.PersonalService;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
-
 @RestController
 @RequestMapping("/personal")
 @PreAuthorize("hasAuthority('human resources')")
@@ -32,7 +31,7 @@ public class PersonalController {
     PersonalService service;
     
     @GetMapping
-    public ResponseEntity<?> getAllPersonal() {
+    public ResponseEntity<List<PersonalDto>> getAllPersonal() {
         return ResponseEntity.ok().body(service.findAllPersonal());
     }
 

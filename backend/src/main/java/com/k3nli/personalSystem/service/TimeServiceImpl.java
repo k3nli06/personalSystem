@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.k3nli.personalSystem.dto.PersonalDto;
 import com.k3nli.personalSystem.dto.TimeRegistryDto;
 import com.k3nli.personalSystem.persistence.entity.TimeRegistry;
 import com.k3nli.personalSystem.persistence.repository.PersonalRepository;
@@ -41,13 +42,13 @@ public class TimeServiceImpl implements TimeService {
         if(time == null) {
             return null;
         }
-        return new TimeRegistryDto(time.getId(), time.getPersonal().getName(), time.getInHour(), time.getOutHour()); 
+        return new TimeRegistryDto(time.getId(), PersonalDto.toDto(time.getPersonal()), time.getInHour(), time.getOutHour()); 
     }
 
     @Override
     public List<TimeRegistryDto> getAllPersonalTodayRegistry() {
         return timeRep.findByInHourAfter(LocalDate.now().atStartOfDay()).stream().map(
-            t -> new TimeRegistryDto(t.getId(), t.getPersonal().getName(), t.getInHour(), t.getOutHour())
+            t -> new TimeRegistryDto(t.getId(), PersonalDto.toDto(t.getPersonal()), t.getInHour(), t.getOutHour())
         ).toList();
     }
 
@@ -68,7 +69,7 @@ public class TimeServiceImpl implements TimeService {
     public List<TimeRegistryDto> getRegistriesBetween(Long id, LocalDate fromDate, LocalDate atDate) {
         List<TimeRegistry> times = timeRep.findByPersonalIdAndInHourBetween(id, fromDate.atStartOfDay(), atDate.atTime(23, 59));
         return times.stream().map(
-            t -> new TimeRegistryDto(t.getId(), t.getPersonal().getName(),t.getInHour(), t.getOutHour())
+            t -> new TimeRegistryDto(t.getId(), PersonalDto.toDto(t.getPersonal()), t.getInHour(), t.getOutHour())
         ).toList();
     }
 
@@ -78,7 +79,7 @@ public class TimeServiceImpl implements TimeService {
         registry.setInHour(timeRegistry.inHour());
         registry.setOutHour(timeRegistry.outHour());
         timeRep.save(registry);
-        return new TimeRegistryDto(id, registry.getPersonal().getName(), registry.getInHour(), registry.getOutHour());
+        return new TimeRegistryDto(id, PersonalDto.toDto(registry.getPersonal()), registry.getInHour(), registry.getOutHour());
     }
 
 }
