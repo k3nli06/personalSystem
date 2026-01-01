@@ -9,6 +9,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
 
+import com.k3nli.personalSystem.dto.DepartmentDto;
 import com.k3nli.personalSystem.dto.PersonalDto;
 import com.k3nli.personalSystem.dto.VacationsDto;
 import com.k3nli.personalSystem.persistence.entity.Status;
@@ -32,9 +33,10 @@ public class VacationsServiceImpl implements VacationsService {
     public VacationsDto addVacations(Long personalId, VacationsDto vacations) {
         Vacations saved = vacationsRep.save(new Vacations(null, personalRep.findById(personalId).get(),
                 vacations.start(), vacations.finish(), Status.PENDING));
-        
-        PersonalDto personalDto = new PersonalDto(personalId, saved.getPersonal().getName(), null, null, null, null,
-                null);
+
+        PersonalDto personalDto = new PersonalDto(personalId, saved.getPersonal().getName(), null, null,
+                DepartmentDto.toDto(saved.getPersonal().getDepartment()),
+                null, saved.getPersonal().getWorkstation(), null);
         return new VacationsDto(saved.getId(), personalDto, saved.getStart(), saved.getFinish(),
                 saved.getStatus());
     }
@@ -48,7 +50,9 @@ public class VacationsServiceImpl implements VacationsService {
         }
 
         PersonalDto personalDto = new PersonalDto(vacations.get().getPersonal().getId(),
-                vacations.get().getPersonal().getName(), null, null, null, null, null);
+                vacations.get().getPersonal().getName(), null, null,
+                DepartmentDto.toDto(vacations.get().getPersonal().getDepartment()), null,
+                vacations.get().getPersonal().getWorkstation(), null);
         return new VacationsDto(id, personalDto, vacations.get().getStart(),
                 vacations.get().getFinish(), vacations.get().getStatus());
     }
@@ -57,10 +61,12 @@ public class VacationsServiceImpl implements VacationsService {
     public List<VacationsDto> findAllPersonalVacations() {
         LocalDate date = LocalDate.now();
         LocalDate localDate = LocalDate.of(date.getYear(), date.getMonth(), 1);
+
         return vacationsRep.findByStartAfter(localDate.atStartOfDay()).stream().map(
                 v -> {
                     PersonalDto personalDto = new PersonalDto(v.getPersonal().getId(), v.getPersonal().getName(), null,
-                            null, null, null, null);
+                            null, DepartmentDto.toDto(v.getPersonal().getDepartment()), null,
+                            v.getPersonal().getWorkstation(), null);
                     return new VacationsDto(v.getId(), personalDto, v.getStart(), v.getFinish(),
                             v.getStatus());
                 }).toList();
@@ -73,8 +79,9 @@ public class VacationsServiceImpl implements VacationsService {
 
         return vacationsRep.findByPersonalIdAndStartAfter(personalId, localDate.atStartOfDay()).stream().map(
                 v -> {
-                    PersonalDto personalDto = new PersonalDto(personalId, v.getPersonal().getName(), null, null, null,
-                            null, null);
+                    PersonalDto personalDto = new PersonalDto(personalId, v.getPersonal().getName(), null, null,
+                            DepartmentDto.toDto(v.getPersonal().getDepartment()),
+                            null, v.getPersonal().getWorkstation(), null);
                     return new VacationsDto(v.getId(), personalDto, v.getStart(), v.getFinish(),
                             v.getStatus());
                 }).toList();
@@ -89,7 +96,8 @@ public class VacationsServiceImpl implements VacationsService {
         vacationsRep.save(saved);
 
         PersonalDto personalDto = new PersonalDto(saved.getPersonal().getId(), saved.getPersonal().getName(), null,
-                null, null, null, null);
+                null, DepartmentDto.toDto(saved.getPersonal().getDepartment()), null,
+                saved.getPersonal().getWorkstation(), null);
         return new VacationsDto(vacationsId, personalDto, saved.getStart(), saved.getFinish(),
                 saved.getStatus());
     }

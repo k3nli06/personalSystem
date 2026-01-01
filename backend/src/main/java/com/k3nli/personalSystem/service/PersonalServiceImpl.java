@@ -27,16 +27,15 @@ public class PersonalServiceImpl implements PersonalService {
 
     @Override
     public PersonalDto addPersonal(PersonalDto personal) {
-        Personal saved = new Personal(null, personal.name(), personal.email(), passwordEncoder.encode(personal.password()),
-                DepartmentDto.toEntity(personal.department()), personal.workstation());
-        
+        Personal saved = new Personal(null, personal.name(), personal.email(),
+                passwordEncoder.encode(personal.password()),
+                DepartmentDto.toEntity(personal.department()), personal.workstation(), personal.baseSalary());
+
         personal.role().stream().forEach(
-            r -> saved.getRoles().add(RoleDto.toEntity(r)));
+                r -> saved.getRoles().add(RoleDto.toEntity(r)));
         saved.setId(repository.save(saved).getId());
 
-        List<RoleDto> rolesDto = saved.getRoles().stream().map(r -> RoleDto.toDto(r)).toList();
-        return new PersonalDto(saved.getId(), saved.getName(), saved.getEmail(), saved.getPassword(),
-                DepartmentDto.toDto(saved.getDepartment()), rolesDto, saved.getWorkstation());
+        return PersonalDto.toDto(saved);
     }
 
     @Override
@@ -46,23 +45,16 @@ public class PersonalServiceImpl implements PersonalService {
         if (!personal.isPresent()) {
             return Optional.empty();
         }
-        List<RoleDto> rolesDto = personal.get().getRoles().stream().map(
-            r -> RoleDto.toDto(r)
-        ).toList();
-        PersonalDto personalDto = new PersonalDto(id, personal.get().getName(), personal.get().getEmail(), null,
-                DepartmentDto.toDto(personal.get().getDepartment()), rolesDto, personal.get().getWorkstation());
+        
+        PersonalDto personalDto = PersonalDto.toDto(personal.get());
         return Optional.of(personalDto);
     }
 
     @Override
     public List<PersonalDto> findAllPersonal() {
         return repository.findAll().stream().map(
-            p -> {
-                List<RoleDto> rolesDto = p.getRoles().stream().map(r -> RoleDto.toDto(r)).toList();
-                return new PersonalDto(p.getId(), p.getName(), p.getEmail(), null, DepartmentDto.toDto(p.getDepartment()),
-                    rolesDto, p.getWorkstation());
-            }
-        ).toList();
+                p -> PersonalDto.toDto(p)
+            ).toList();
     }
 
     @Override
@@ -73,13 +65,10 @@ public class PersonalServiceImpl implements PersonalService {
         saved.setDepartment(DepartmentDto.toEntity(personal.department()));
         saved.setWorkstation(personal.workstation());
         personal.role().stream().forEach(
-            r -> saved.getRoles().add(RoleDto.toEntity(r))
-        );
+                r -> saved.getRoles().add(RoleDto.toEntity(r)));
         repository.save(saved);
 
-        List<RoleDto> rolesDto = saved.getRoles().stream().map(r -> RoleDto.toDto(r)).toList();
-        return new PersonalDto(saved.getId(), saved.getName(), saved.getEmail(), null, 
-                DepartmentDto.toDto(saved.getDepartment()), rolesDto, saved.getWorkstation());
+        return PersonalDto.toDto(saved);
     }
 
     @Override
@@ -92,7 +81,7 @@ public class PersonalServiceImpl implements PersonalService {
     @Override
     public boolean deletePersonal(Long id) {
         var saved = repository.findById(id);
-        if(!saved.isPresent()) {
+        if (!saved.isPresent()) {
             return false;
         }
         repository.delete(saved.get());
