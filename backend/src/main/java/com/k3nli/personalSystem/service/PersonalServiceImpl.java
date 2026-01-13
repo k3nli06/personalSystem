@@ -64,6 +64,7 @@ public class PersonalServiceImpl implements PersonalService {
         saved.setEmail(personal.email());
         saved.setDepartment(DepartmentDto.toEntity(personal.department()));
         saved.setWorkstation(personal.workstation());
+        saved.setBaseSalary(personal.baseSalary());
         personal.role().stream().forEach(
                 r -> saved.getRoles().add(RoleDto.toEntity(r)));
         repository.save(saved);

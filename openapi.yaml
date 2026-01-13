@@ -1,0 +1,828 @@
+openapi: 3.0.0
+info:
+  title: Personal System
+  version: 1.0.0
+  description: >-
+    A system that allows the easyer management of all the company personal. This
+    API returns a JWT token in the /auth/login endpoint tha needs to be decoded
+    to determine the user interface, which is different from the employee
+    interface and the human resources interface
+servers:
+  - url: http://localhost:8080/api
+    description: Generated server url
+paths:
+  /vacations/{id}:
+    get:
+      tags:
+        - vacations-controller
+      operationId: getVacations
+      summary: Acces to human resources and personal that request his own infomation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - JWTAuth:
+            - human resources
+        - JWTAuth:
+            - employee
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/VacationsDto'
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+    put:
+      tags:
+        - vacations-controller
+      operationId: updateVacations
+      summary: Acces to human resources and personal that request his own infomation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VacationsDto'
+        required: true
+      security:
+        - JWTAuth:
+            - human resources
+        - JWTAuth:
+            - employee
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/VacationsDto'
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+    post:
+      tags:
+        - vacations-controller
+      operationId: postVacations
+      summary: Acces to human resources and personal that request his own infomation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VacationsDto'
+        required: true
+      security:
+        - JWTAuth:
+            - human resources
+        - JWTAuth:
+            - employee
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/VacationsDto'
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+    delete:
+      tags:
+        - vacations-controller
+      operationId: deleteVacations
+      summary: Acces to human resources and personal that request his own infomation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - JWTAuth:
+            - human resources
+        - JWTAuth:
+            - employee
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+    patch:
+      tags:
+        - vacations-controller
+      operationId: setVacationsStatus
+      summary: Acces to human resources
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusDto'
+        required: true
+      security:
+        - JWTAuth:
+            - human resources
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+  /time-registry/update/{id}:
+    put:
+      tags:
+        - time-registry-controller
+      operationId: putMethodName
+      summary: Only acces to human resources
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeRegistryDto'
+        required: true
+      security:
+        - JWTAuth:
+            - human resources
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TimeRegistryDto'
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+  /personal/{id}:
+    get:
+      tags:
+        - personal-controller
+      operationId: getPersonal
+      summary: Acces to human resources and personal that request his own infomation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - JWTAuth:
+            - human resources
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PersonalDto'
+    put:
+      tags:
+        - personal-controller
+      operationId: updatePersonal
+      summary: Acces to human resources and personal that request his own infomation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalDto'
+        required: true
+      security:
+        - JWTAuth:
+            - human resources
+        - JWTAuth:
+            - human employee
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PersonalDto'
+    delete:
+      tags:
+        - personal-controller
+      operationId: deletePersonal
+      summary: Only acces to human resources
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - JWTAuth:
+            - human resources
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /time-registry/{id}:
+    get:
+      tags:
+        - time-registry-controller
+      operationId: getTodayRegistry
+      summary: Acces to human resources and personal that request his own infomation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: fromDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: atDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      security:
+        - JWTAuth:
+            - human resources
+        - JWTAuth:
+            - employee
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/TimeRegistryDto'
+                  - $ref: '#/components/schemas/TimeRegistryDto'
+    post:
+      tags:
+        - time-registry-controller
+      operationId: addhour
+      summary: Acces to human resources and personal that request his own infomation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeRegistryRequest'
+        required: true
+        security:
+          - JWTAuth:
+              - human resources
+          - JWTAuth:
+              - employee
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+  /personal:
+    get:
+      tags:
+        - personal-controller
+      operationId: getAllPersonal
+      summary: Only acces to human resources
+      security:
+        - JWTAuth:
+            - human resources
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PersonalDto'
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+    post:
+      tags:
+        - personal-controller
+      operationId: savePersonal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalDto'
+        required: true
+      summary: Only acces to human resources
+      security:
+        - JWTAuth:
+            - human resources
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PersonalDto'
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+  /monthly-payments:
+    get:
+      tags:
+        - monthly-payment-controller
+      operationId: getPaymentsByPersonal
+      summary: acces to human resources and personal that request his own information
+      security:
+        - JWTAuth:
+            - human resources
+            - employee
+      parameters:
+        - name: personalId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/MonthlyPaymentDto'
+                  - type: object
+        '404':
+          description: not found
+          content:
+            application/text*:
+              - schema: null
+    post:
+      tags:
+        - monthly-payment-controller
+      operationId: generatePayment
+      summary: acces to human resources
+      security:
+        JWTAuth:
+          - human resources
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MonthlyPaymentDto'
+        '404':
+          description: not found
+          content:
+            application/text*:
+              - schema: null
+        '409':
+          description: conflict
+          content:
+            application/text:
+              - schema: null
+    patch:
+      tags:
+        - monthly-payment-controller
+      operationId: updatePayment
+      summary: reCalculate payment, Only acces for human resources
+      security:
+        JWTAuth:
+          - human resources
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MonthlyPaymentDto'
+  /auth/login:
+    post:
+      tags:
+        - authentication-controller
+      summary: >-
+        it returns the JWT, it contains the authorities in the payload. It is
+        necessary to decode it to determine what the front end displays.
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TokenDto'
+        '401':
+          description: unauthorize
+          content:
+            '*/*':
+              type: object
+  /personal/update-password/{id}:
+    patch:
+      tags:
+        - personal-controller
+      operationId: updatePersonalPassword
+      summary: Acces to human resources and personal that request his own infomation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      security:
+        - JWTAuth:
+            - human resources
+        - JWTAuth:
+            - employee
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /vacations:
+    get:
+      tags:
+        - vacations-controller
+      operationId: getAllPersonalVaations
+      summary: Only acces to human resources
+      parameters:
+        - name: personal
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - JWTAuth:
+            - human resources
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VacationsDto'
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+  /time-registry:
+    get:
+      tags:
+        - time-registry-controller
+      operationId: getAllPersonalTodayRegistries
+      summary: only acces to human resources
+      security:
+        - JWTAuth:
+            - human resources
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeRegistryDto'
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+  /role:
+    get:
+      tags:
+        - role-controller
+      operationId: getRoles
+      summary: >-
+        Its required to add roles to a new personal. Only acces to human
+        resources
+      security:
+        - JWTAuth:
+            - human resources
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleDto'
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+  /monthly-payments/{id}:
+    get:
+      tags:
+        - monthly-payment-controller
+      operationId: getPaymentById
+      summary: Acces to human resources and personal that request his own information
+      security:
+        - JWTAuth:
+            - human resources
+            - employee
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MonthlyPaymentDto'
+  /department:
+    get:
+      tags:
+        - department-controller
+      operationId: getDepartments
+      summary: >-
+        Its required to determine the department of the new personal. Only acces
+        to human resources
+      security:
+        - JWTAuth:
+            - human resources
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DepartmentDto'
+        '403':
+          description: forbidden
+          content:
+            '*/*':
+              type: object
+components:
+  securitySchemes:
+    JWTAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: To acces to this endpoints, its required a valid JWT Token.
+  schemas:
+    DepartmentDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    PersonalDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        department:
+          $ref: '#/components/schemas/DepartmentDto'
+        role:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleDto'
+        workstation:
+          type: string
+    RoleDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    VacationsDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        personal:
+          $ref: '#/components/schemas/PersonalDto'
+        start:
+          type: string
+          format: date-time
+        finish:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - PENDING
+            - APPROVED
+            - REJECTED
+    TimeRegistryDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        personal:
+          $ref: '#/components/schemas/PersonalDto'
+        inHour:
+          type: string
+          format: date-time
+        outHour:
+          type: string
+          format: date-time
+    TimeRegistryRequest:
+      type: object
+      properties:
+        time:
+          type: string
+          format: date-time
+    PaymentRequest:
+      type: object
+      properties:
+        personalId:
+          type: integer
+          format: int64
+        bonuses:
+          type: number
+          format: double
+    LoginDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        password:
+          type: string
+    TokenDto:
+      type: object
+      properties:
+        token:
+          type: string
+    StatusDto:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - PENDING
+            - APPROVED
+            - REJECTED
+    MonthlyPaymentDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        personalDto:
+          $ref: '#/components/schemas/PersonalDto'
+        generatedDate:
+          type: string
+          format: date-time
+        paymentMonth:
+          type: string
+          example: 2025-03
+        percentageHealthInsurance:
+          type: number
+        percentageTaxWithHoldings:
+          type: number
+        totalPercentageDeductions:
+          type: number
+        salaryReduction:
+          type: number
+        Bonuses:
+          type: number
+        overtimes:
+          type: number
+        grossSalary:
+          type: number
+        netSalary:
+          type: number

@@ -32,7 +32,7 @@ public class TimeRegistryRepositoryTest {
 
     @BeforeEach
     void setup() {
-        Personal personal = personalRep.save(new Personal(null, "personal", null, null, null, null));
+        Personal personal = personalRep.save(new Personal(null, "personal", null, null, null, null, null));
         id = personal.getId();
         t1 = timesRep.save(new TimeRegistry(null, personal, 
                 LocalDateTime.of(2025, 11, 2, 9, 0, 0), LocalDateTime.of(2025, 11, 2, 12, 0, 0))).getId();

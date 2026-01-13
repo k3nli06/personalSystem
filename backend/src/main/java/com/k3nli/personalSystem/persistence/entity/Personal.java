@@ -1,9 +1,12 @@
 package com.k3nli.personalSystem.persistence.entity;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -52,20 +55,25 @@ public class Personal implements UserDetails {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "personal", cascade = CascadeType.PERSIST)
-    private Set<TimeRegistry> times = new HashSet<>();
+    private List<TimeRegistry> times = new ArrayList<>();
     @OneToMany(mappedBy = "personal", cascade = CascadeType.PERSIST)
     private Set<Vacations> vacations = new HashSet<>();
+    @Column(name = "base_salary", precision = 19, scale = 2)
+    private BigDecimal baseSalary;
+    @OneToMany(mappedBy = "personal", cascade = CascadeType.PERSIST)
+    private List<MonthlyPayment> monthlyPayment = new ArrayList<>();
     @Column(name = "hiring_date")
     @CurrentTimestamp(event = EventType.INSERT)
     private LocalDateTime hiringDate;
     
-    public Personal(Long id, String name, String email, String password, Department department, String workstation) {
+    public Personal(Long id, String name, String email, String password, Department department, String workstation, BigDecimal baseSalary) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.department = department;
         this.workstation = workstation;
+        this.baseSalary = baseSalary == null? BigDecimal.valueOf(0.00) : baseSalary;
     }
     
     @Override
