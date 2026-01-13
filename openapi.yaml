@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 openapi: 3.0.0
 info:
   title: Personal System
@@ -7,6 +8,13 @@ info:
     API returns a JWT token in the /auth/login endpoint tha needs to be decoded
     to determine the user interface, which is different from the employee
     interface and the human resources interface
+=======
+openapi: 3.1.9
+info:
+  title: Personal System
+  version: 1.0.0
+  description: 'A system that allows the easyer management of all the personal of a company. This API returns an JWT token in the /auth/login endpoint tha needs to be decoded to determine the user interface, which is different from the employee interface and the human resources interface'
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
 servers:
   - url: http://localhost:8080/api
     description: Generated server url
@@ -25,9 +33,15 @@ paths:
             type: integer
             format: int64
       security:
+<<<<<<< HEAD
         - JWTAuth:
             - human resources
         - JWTAuth:
+=======
+          - JWTAuth:
+            - human resources
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - employee
       responses:
         '200':
@@ -60,9 +74,15 @@ paths:
               $ref: '#/components/schemas/VacationsDto'
         required: true
       security:
+<<<<<<< HEAD
         - JWTAuth:
             - human resources
         - JWTAuth:
+=======
+          - JWTAuth:
+            - human resources
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - employee
       responses:
         '200':
@@ -95,9 +115,15 @@ paths:
               $ref: '#/components/schemas/VacationsDto'
         required: true
       security:
+<<<<<<< HEAD
         - JWTAuth:
             - human resources
         - JWTAuth:
+=======
+          - JWTAuth:
+            - human resources
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - employee
       responses:
         '200':
@@ -124,9 +150,15 @@ paths:
             type: integer
             format: int64
       security:
+<<<<<<< HEAD
         - JWTAuth:
             - human resources
         - JWTAuth:
+=======
+          - JWTAuth:
+            - human resources
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - employee
       responses:
         '200':
@@ -159,7 +191,11 @@ paths:
               $ref: '#/components/schemas/StatusDto'
         required: true
       security:
+<<<<<<< HEAD
         - JWTAuth:
+=======
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human resources
       responses:
         '200':
@@ -193,7 +229,11 @@ paths:
               $ref: '#/components/schemas/TimeRegistryDto'
         required: true
       security:
+<<<<<<< HEAD
         - JWTAuth:
+=======
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human resources
       responses:
         '200':
@@ -221,7 +261,11 @@ paths:
             type: integer
             format: int64
       security:
+<<<<<<< HEAD
         - JWTAuth:
+=======
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human resources
       responses:
         '200':
@@ -249,9 +293,15 @@ paths:
               $ref: '#/components/schemas/PersonalDto'
         required: true
       security:
+<<<<<<< HEAD
         - JWTAuth:
             - human resources
         - JWTAuth:
+=======
+          - JWTAuth:
+            - human resources
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human employee
       responses:
         '200':
@@ -273,7 +323,11 @@ paths:
             type: integer
             format: int64
       security:
+<<<<<<< HEAD
         - JWTAuth:
+=======
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human resources
       responses:
         '200':
@@ -308,9 +362,15 @@ paths:
             type: string
             format: date
       security:
+<<<<<<< HEAD
         - JWTAuth:
             - human resources
         - JWTAuth:
+=======
+          - JWTAuth:
+            - human resources
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - employee
       responses:
         '200':
@@ -343,9 +403,15 @@ paths:
         required: true
         security:
           - JWTAuth:
+<<<<<<< HEAD
               - human resources
           - JWTAuth:
               - employee
+=======
+            - human resources
+          - JWTAuth:
+            - employee
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
       responses:
         '200':
           description: OK
@@ -365,7 +431,11 @@ paths:
       operationId: getAllPersonal
       summary: Only acces to human resources
       security:
+<<<<<<< HEAD
         - JWTAuth:
+=======
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human resources
       responses:
         '200':
@@ -393,7 +463,11 @@ paths:
         required: true
       summary: Only acces to human resources
       security:
+<<<<<<< HEAD
         - JWTAuth:
+=======
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human resources
       responses:
         '200':
@@ -407,6 +481,7 @@ paths:
           content:
             '*/*':
               type: object
+<<<<<<< HEAD
   /monthly-payments:
     get:
       tags:
@@ -497,13 +572,19 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/MonthlyPaymentDto'
+=======
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
   /auth/login:
     post:
       tags:
         - authentication-controller
+<<<<<<< HEAD
       summary: >-
         it returns the JWT, it contains the authorities in the payload. It is
         necessary to decode it to determine what the front end displays.
+=======
+      summary: it returns the JWT, it contains the authorities in the payload. It is necessary to decode it to determine what the front end displays.
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
       operationId: login
       requestBody:
         content:
@@ -543,9 +624,15 @@ paths:
               type: string
         required: true
       security:
+<<<<<<< HEAD
         - JWTAuth:
             - human resources
         - JWTAuth:
+=======
+          - JWTAuth:
+            - human resources
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - employee
       responses:
         '200':
@@ -568,7 +655,11 @@ paths:
             type: integer
             format: int64
       security:
+<<<<<<< HEAD
         - JWTAuth:
+=======
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human resources
       responses:
         '200':
@@ -591,7 +682,11 @@ paths:
       operationId: getAllPersonalTodayRegistries
       summary: only acces to human resources
       security:
+<<<<<<< HEAD
         - JWTAuth:
+=======
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human resources
       responses:
         '200':
@@ -612,11 +707,17 @@ paths:
       tags:
         - role-controller
       operationId: getRoles
+<<<<<<< HEAD
       summary: >-
         Its required to add roles to a new personal. Only acces to human
         resources
       security:
         - JWTAuth:
+=======
+      summary: Its required to add roles to a new personal. Only acces to human resources
+      security:
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human resources
       responses:
         '200':
@@ -632,6 +733,7 @@ paths:
           content:
             '*/*':
               type: object
+<<<<<<< HEAD
   /monthly-payments/{id}:
     get:
       tags:
@@ -656,16 +758,24 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/MonthlyPaymentDto'
+=======
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
   /department:
     get:
       tags:
         - department-controller
       operationId: getDepartments
+<<<<<<< HEAD
       summary: >-
         Its required to determine the department of the new personal. Only acces
         to human resources
       security:
         - JWTAuth:
+=======
+      summary: Its required to determine the department of the new personal. Only acces to human resources
+      security:
+          - JWTAuth:
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
             - human resources
       responses:
         '200':
@@ -687,7 +797,11 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+<<<<<<< HEAD
       description: To acces to this endpoints, its required a valid JWT Token.
+=======
+      description: 'To acces to this endpoints, its required a valid JWT Token.'
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
   schemas:
     DepartmentDto:
       type: object
@@ -765,6 +879,7 @@ components:
         time:
           type: string
           format: date-time
+<<<<<<< HEAD
     PaymentRequest:
       type: object
       properties:
@@ -774,6 +889,8 @@ components:
         bonuses:
           type: number
           format: double
+=======
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
     LoginDto:
       type: object
       properties:
@@ -796,6 +913,7 @@ components:
             - PENDING
             - APPROVED
             - REJECTED
+<<<<<<< HEAD
     MonthlyPaymentDto:
       type: object
       properties:
@@ -826,3 +944,5 @@ components:
           type: number
         netSalary:
           type: number
+=======
+>>>>>>> 63e93a4968227572f20f770f5829867d8c5eea12
